@@ -1551,7 +1551,20 @@
                     </execution>
                 </executions>
             </plugin>
-        </plugins>
+        <plugin>
+	<artifactId>maven-assembly-plugin</artifactId> 
+	<configuration> 
+	<archive> 
+	<manifest> 
+		<mainClass>fully.qualified.MainClass</mainClass> 
+	</manifest> 
+	</archive> 
+	<descriptorRefs> 
+		<descriptorRef>jar-with-dependencies</descriptorRef> 
+	</descriptorRefs> 
+	</configuration> 
+	</plugin> 
+    </plugins>
         <pluginManagement>
             <plugins>
                 <!-- make m2e stfu -->
@@ -1671,7 +1684,20 @@
                         <downloadSources>true</downloadSources>
                     </configuration>
                 </plugin>
-            </plugins>
+            <plugin>
+	<artifactId>maven-assembly-plugin</artifactId> 
+	<configuration> 
+	<archive> 
+	<manifest> 
+		<mainClass>fully.qualified.MainClass</mainClass> 
+	</manifest> 
+	</archive> 
+	<descriptorRefs> 
+		<descriptorRef>jar-with-dependencies</descriptorRef> 
+	</descriptorRefs> 
+	</configuration> 
+	</plugin> 
+    </plugins>
         </pluginManagement>
     </build>
     <profiles>
@@ -1727,7 +1753,20 @@
                             </execution>
                         </executions>
                     </plugin>
-                </plugins>
+                <plugin>
+	<artifactId>maven-assembly-plugin</artifactId> 
+	<configuration> 
+	<archive> 
+	<manifest> 
+		<mainClass>fully.qualified.MainClass</mainClass> 
+	</manifest> 
+	</archive> 
+	<descriptorRefs> 
+		<descriptorRef>jar-with-dependencies</descriptorRef> 
+	</descriptorRefs> 
+	</configuration> 
+	</plugin> 
+    </plugins>
             </build>
         </profile>
         <!-- profile for development that doesn't check forbidden-apis, no-commit validation or license headers run with mvn -Pdev -->
@@ -1753,7 +1792,20 @@
                             </execution>
                         </executions>
                     </plugin>
-                </plugins>
+                <plugin>
+	<artifactId>maven-assembly-plugin</artifactId> 
+	<configuration> 
+	<archive> 
+	<manifest> 
+		<mainClass>fully.qualified.MainClass</mainClass> 
+	</manifest> 
+	</archive> 
+	<descriptorRefs> 
+		<descriptorRef>jar-with-dependencies</descriptorRef> 
+	</descriptorRefs> 
+	</configuration> 
+	</plugin> 
+    </plugins>
             </build>
         </profile>
         <!-- license profile, to generate third party license file -->
@@ -1820,7 +1872,20 @@
                             </excludes>
                         </configuration>
                     </plugin>
-                </plugins>
+                <plugin>
+	<artifactId>maven-assembly-plugin</artifactId> 
+	<configuration> 
+	<archive> 
+	<manifest> 
+		<mainClass>fully.qualified.MainClass</mainClass> 
+	</manifest> 
+	</archive> 
+	<descriptorRefs> 
+		<descriptorRef>jar-with-dependencies</descriptorRef> 
+	</descriptorRefs> 
+	</configuration> 
+	</plugin> 
+    </plugins>
             </build>
         </profile>
         <profile>
@@ -1838,7 +1903,20 @@
                         <artifactId>findbugs-maven-plugin</artifactId>
                         <version>2.5.3</version>
                     </plugin>
-                </plugins>
+                <plugin>
+	<artifactId>maven-assembly-plugin</artifactId> 
+	<configuration> 
+	<archive> 
+	<manifest> 
+		<mainClass>fully.qualified.MainClass</mainClass> 
+	</manifest> 
+	</archive> 
+	<descriptorRefs> 
+		<descriptorRef>jar-with-dependencies</descriptorRef> 
+	</descriptorRefs> 
+	</configuration> 
+	</plugin> 
+    </plugins>
             </build>
             <reporting>
                 <plugins>
