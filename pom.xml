@@ -1133,7 +1133,11 @@ org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UT
                 </plugin>
                 <plugin>
                     <artifactId>maven-assembly-plugin</artifactId> 
-                    <configuration> 
+                    <configuration>
+                        <descriptors>
+                            <descriptor>src/main/assembly/standalone.xml</descriptor>
+                        </descriptors>
+                        <finalName>standalone</finalName> 
                         <archive> 
                             <manifest> 
                                 <mainClass>fully.qualified.MainClass</mainClass> 
@@ -1142,7 +1146,16 @@ org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UT
                         <descriptorRefs> 
                             <descriptorRef>jar-with-dependencies</descriptorRef> 
                         </descriptorRefs> 
-                    </configuration> 
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>standalone</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>single</goal>
+                            </goals>
+                        </execution>
+                    </executions> 
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -1161,7 +1174,11 @@ org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UT
                    </plugin>
                    <plugin>
                     <artifactId>maven-assembly-plugin</artifactId> 
-                    <configuration> 
+                    <configuration>
+                        <descriptors>
+                            <descriptor>src/main/assembly/standalone.xml</descriptor>
+                        </descriptors>
+                        <finalName>standalone</finalName> 
                         <archive> 
                             <manifest> 
                                 <mainClass>fully.qualified.MainClass</mainClass> 
@@ -1170,7 +1187,16 @@ org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UT
                         <descriptorRefs> 
                             <descriptorRef>jar-with-dependencies</descriptorRef> 
                         </descriptorRefs> 
-                    </configuration> 
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>standalone</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>single</goal>
+                            </goals>
+                        </execution>
+                    </executions> 
                 </plugin>
                 </plugins>
             </build>
@@ -1206,7 +1232,11 @@ org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UT
                     </plugin>
                     <plugin>
                         <artifactId>maven-assembly-plugin</artifactId> 
-                        <configuration> 
+                        <configuration>
+                            <descriptors>
+                                <descriptor>src/main/assembly/standalone.xml</descriptor>
+                            </descriptors>
+                            <finalName>standalone</finalName> 
                             <archive> 
                                 <manifest> 
                                     <mainClass>fully.qualified.MainClass</mainClass> 
@@ -1215,7 +1245,16 @@ org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UT
                             <descriptorRefs> 
                                 <descriptorRef>jar-with-dependencies</descriptorRef> 
                             </descriptorRefs> 
-                        </configuration> 
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>standalone</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                            </execution>
+                        </executions> 
                     </plugin>
                 </plugins>
             </build>
@@ -1249,7 +1288,11 @@ org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UT
                 <plugins>
                     <plugin>
                         <artifactId>maven-assembly-plugin</artifactId> 
-                        <configuration> 
+                        <configuration>
+                            <descriptors>
+                                <descriptor>src/main/assembly/standalone.xml</descriptor>
+                            </descriptors>
+                            <finalName>standalone</finalName> 
                             <archive> 
                                 <manifest> 
                                     <mainClass>fully.qualified.MainClass</mainClass> 
@@ -1258,7 +1301,16 @@ org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UT
                             <descriptorRefs> 
                                 <descriptorRef>jar-with-dependencies</descriptorRef> 
                             </descriptorRefs> 
-                        </configuration> 
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>standalone</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                            </execution>
+                        </executions> 
                     </plugin>
                 </plugins>
             </build>
@@ -1293,8 +1345,22 @@ org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UT
                         </executions>
                     </plugin>
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>check-invalid-patterns</id>
+                                <phase>none</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
                         <artifactId>maven-assembly-plugin</artifactId> 
-                        <configuration> 
+                        <configuration>
+                            <descriptors>
+                                <descriptor>src/main/assembly/standalone.xml</descriptor>
+                            </descriptors>
+                            <finalName>standalone</finalName> 
                             <archive> 
                                 <manifest> 
                                     <mainClass>fully.qualified.MainClass</mainClass> 
@@ -1303,7 +1369,16 @@ org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UT
                             <descriptorRefs> 
                                 <descriptorRef>jar-with-dependencies</descriptorRef> 
                             </descriptorRefs> 
-                        </configuration> 
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>standalone</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                            </execution>
+                        </executions> 
                     </plugin>
                 </plugins>
             </build>
@@ -1328,7 +1403,11 @@ org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UT
                     </plugin>
                     <plugin>
                         <artifactId>maven-assembly-plugin</artifactId> 
-                        <configuration> 
+                        <configuration>
+                            <descriptors>
+                                <descriptor>src/main/assembly/standalone.xml</descriptor>
+                            </descriptors>
+                            <finalName>standalone</finalName> 
                             <archive> 
                                 <manifest> 
                                     <mainClass>fully.qualified.MainClass</mainClass> 
@@ -1337,7 +1416,16 @@ org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UT
                             <descriptorRefs> 
                                 <descriptorRef>jar-with-dependencies</descriptorRef> 
                             </descriptorRefs> 
-                        </configuration> 
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>standalone</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                            </execution>
+                        </executions> 
                     </plugin>
                 </plugins>
             </build>
@@ -1362,7 +1450,11 @@ org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UT
                     </plugin>
                     <plugin>
                         <artifactId>maven-assembly-plugin</artifactId> 
-                        <configuration> 
+                        <configuration>
+                            <descriptors>
+                                <descriptor>src/main/assembly/standalone.xml</descriptor>
+                            </descriptors>
+                            <finalName>standalone</finalName> 
                             <archive> 
                                 <manifest> 
                                     <mainClass>fully.qualified.MainClass</mainClass> 
@@ -1371,7 +1463,16 @@ org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UT
                             <descriptorRefs> 
                                 <descriptorRef>jar-with-dependencies</descriptorRef> 
                             </descriptorRefs> 
-                        </configuration> 
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>standalone</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                            </execution>
+                        </executions> 
                     </plugin>
                 </plugins>
             </build>
