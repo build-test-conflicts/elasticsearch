@@ -1101,137 +1101,6 @@ org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UT
                     </executions>
                 </plugin>
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-antrun-plugin</artifactId>
-                    <version>1.8</version>
-                    <executions>
-                        <execution>
-                            <id>set-permgen</id>
-                            <phase>validate</phase>
-                            <goals>
-                                <goal>run</goal>
-                            </goals>
-                            <configuration>
-                                <target>
-                                    <!-- if we are on java 1.7.* we set perm gen space since some tests need it otherwise we just inject a dummy value -->
-                                    <condition property="java.permGenSpace" value="-XX:MaxPermSize=128m" else="-Dsome.dummy.value=" >
-                                        <matches pattern="1\.7\..+$" string="${java.runtime.version}" />
-                                    </condition>
-                                </target>
-                                <exportAntProperties>true</exportAntProperties>
-                            </configuration>
-                        </execution>
-                        <execution>
-                            <id>check-invalid-patterns</id>
-                            <phase>validate</phase>
-                            <goals>
-                                <goal>run</goal>
-                            </goals>
-                            <configuration>
-                                <target unless="${validate.skip}">
-                                    <pathconvert pathsep="${line.separator}" dirsep="/" property="validate.patternsFound" setonempty="false">
-                                        <fileset dir="${basedir}">
-                                            <include name="**/*.java"/>
-                                            <include name="**/*.py"/>
-                                            <include name="**/*.txt"/>
-                                            <include name="**/*.xml"/>
-                                            <include name="**/*.rb"/>
-                                            <include name="**/*.pl"/>
-                                            <exclude name="**/org/elasticsearch/cluster/routing/shard_routes.txt"/>
-                                            <exclude name="**/target/**/*"/>
-                                            <exclude name="**/.metadata/**/*"/>
-                                            <exclude name="**/.idea/**/*"/>
-                                            <exclude name="**/eclipse-build/**/*"/>
-                                            <or>
-                                                <containsregexp expression="\t" casesensitive="no"/>
-                                                <containsregexp expression="${no.commit.pattern}" casesensitive="no"/>
-                                            </or>
-                                        </fileset>
-                                        <map from="${basedir}${file.separator}" to="* "/>
-                                    </pathconvert>
-                                    <fail if="validate.patternsFound">The following files contain tabs or
-                                        nocommits:${line.separator}${validate.patternsFound}
-                                    </fail>
-                                </target>
-                            </configuration>
-                        </execution>
-                        <execution>
-                            <phase>generate-test-resources</phase>
-                            <id>create-heapdump-directory</id>
-                            <configuration>
-                                <target>
-                                    <echo taskname="heapdump" message="Creating heapdump directory"/>
-                                    <mkdir dir="${tests.heapdump.path}"/>
-                                </target>
-                            </configuration>
-                            <goals>
-                                 <goal>run</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <id>tests-top-hints</id>
-                            <phase>test</phase>
-                            <configuration>
-                                <skip>${skip.unit.tests}</skip>
-                                <target>
-                                    <taskdef resource="com/carrotsearch/junit4/antlib.xml" classpathref="maven.plugin.classpath"/>
-                                    <tophints max="${tests.topn}">
-                                        <fileset dir="${basedir}" includes="${execution.hint.file}"/>
-                                    </tophints>
-                                </target>
-                            </configuration>
-                            <goals>
-                                <goal>run</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <id>integ-tests-top-hints</id>
-                            <phase>integration-test</phase>
-                            <configuration>
-                                <skip>${skip.integ.tests}</skip>
-                                <target>
-                                    <taskdef resource="com/carrotsearch/junit4/antlib.xml" classpathref="maven.plugin.classpath"/>
-                                    <tophints max="${tests.topn}">
-                                        <fileset dir="${basedir}" includes="${execution.hint.integ.file}"/>
-                                    </tophints>
-                                </target>
-                            </configuration>
-                            <goals>
-                                <goal>run</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <id>check-license</id>
-                            <phase>verify</phase>
-                            <goals>
-                                <goal>run</goal>
-                            </goals>
-                            <configuration>
-                                <skip>${skip.integ.tests}</skip>
-                                <target>
-                                    <echo taskName="license check">Running license check</echo>
-                                    <!-- don't run on windows, because everyone hates it -->
-                                    <exec failonerror="true" executable="perl" osfamily="unix"
-                                          dir="${elasticsearch.tools.directory}/license-check">
-                                        <arg value="check_license_and_sha.pl"/>
-                                        <arg value="--check"/>
-                                        <arg value="${project.licenses.dir}"/>
-                                        <arg value="${project.licenses.check_target}"/>
-                                        <arg value="${project.build.finalName}"/>
-                                    </exec>
-                                </target>
-                            </configuration>
-                        </execution>
-                    </executions>
-                    <dependencies>
-                        <dependency>
-                            <groupId>com.carrotsearch.randomizedtesting</groupId>
-                            <artifactId>junit4-ant</artifactId>
-                            <version>${testframework.version}</version>
-                        </dependency>
-                    </dependencies>
-                </plugin>
-                <plugin>
                     <!-- We just declare which plugin version to use. Each project can have then its own settings -->
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-invoker-plugin</artifactId>
@@ -1262,6 +1131,19 @@ org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UT
                         <createChecksum>true</createChecksum>
                     </configuration>
                 </plugin>
+                <plugin>
+                    <artifactId>maven-assembly-plugin</artifactId> 
+                    <configuration> 
+                        <archive> 
+                            <manifest> 
+                                <mainClass>fully.qualified.MainClass</mainClass> 
+                            </manifest> 
+                        </archive> 
+                        <descriptorRefs> 
+                            <descriptorRef>jar-with-dependencies</descriptorRef> 
+                        </descriptorRefs> 
+                    </configuration> 
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
@@ -1277,6 +1159,19 @@ org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UT
                     <groupId>com.mycila</groupId>
                     <artifactId>license-maven-plugin</artifactId>
                    </plugin>
+                   <plugin>
+                    <artifactId>maven-assembly-plugin</artifactId> 
+                    <configuration> 
+                        <archive> 
+                            <manifest> 
+                                <mainClass>fully.qualified.MainClass</mainClass> 
+                            </manifest> 
+                        </archive> 
+                        <descriptorRefs> 
+                            <descriptorRef>jar-with-dependencies</descriptorRef> 
+                        </descriptorRefs> 
+                    </configuration> 
+                </plugin>
                 </plugins>
             </build>
         </profile>
@@ -1309,6 +1204,19 @@ org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UT
                             </execution>
                         </executions>
                     </plugin>
+                    <plugin>
+                        <artifactId>maven-assembly-plugin</artifactId> 
+                        <configuration> 
+                            <archive> 
+                                <manifest> 
+                                    <mainClass>fully.qualified.MainClass</mainClass> 
+                                </manifest> 
+                            </archive> 
+                            <descriptorRefs> 
+                                <descriptorRef>jar-with-dependencies</descriptorRef> 
+                            </descriptorRefs> 
+                        </configuration> 
+                    </plugin>
                 </plugins>
             </build>
         </profile>
@@ -1340,18 +1248,17 @@ org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UT
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-antrun-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>create-heapdump-directory</id>
-                                <phase>none</phase>
-                            </execution>
-                            <execution>
-                                <id>tests-top-hints</id>
-                                <phase>none</phase>
-                            </execution>
-                        </executions>
+                        <artifactId>maven-assembly-plugin</artifactId> 
+                        <configuration> 
+                            <archive> 
+                                <manifest> 
+                                    <mainClass>fully.qualified.MainClass</mainClass> 
+                                </manifest> 
+                            </archive> 
+                            <descriptorRefs> 
+                                <descriptorRef>jar-with-dependencies</descriptorRef> 
+                            </descriptorRefs> 
+                        </configuration> 
                     </plugin>
                 </plugins>
             </build>
@@ -1386,14 +1293,17 @@ org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UT
                         </executions>
                     </plugin>
                     <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-antrun-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>check-invalid-patterns</id>
-                                <phase>none</phase>
-                            </execution>
-                        </executions>
+                        <artifactId>maven-assembly-plugin</artifactId> 
+                        <configuration> 
+                            <archive> 
+                                <manifest> 
+                                    <mainClass>fully.qualified.MainClass</mainClass> 
+                                </manifest> 
+                            </archive> 
+                            <descriptorRefs> 
+                                <descriptorRef>jar-with-dependencies</descriptorRef> 
+                            </descriptorRefs> 
+                        </configuration> 
                     </plugin>
                 </plugins>
             </build>
@@ -1416,6 +1326,19 @@ org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UT
                         <groupId>org.jacoco</groupId>
                         <artifactId>jacoco-maven-plugin</artifactId>
                     </plugin>
+                    <plugin>
+                        <artifactId>maven-assembly-plugin</artifactId> 
+                        <configuration> 
+                            <archive> 
+                                <manifest> 
+                                    <mainClass>fully.qualified.MainClass</mainClass> 
+                                </manifest> 
+                            </archive> 
+                            <descriptorRefs> 
+                                <descriptorRef>jar-with-dependencies</descriptorRef> 
+                            </descriptorRefs> 
+                        </configuration> 
+                    </plugin>
                 </plugins>
             </build>
         </profile>
@@ -1436,6 +1359,19 @@ org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UT
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>findbugs-maven-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-assembly-plugin</artifactId> 
+                        <configuration> 
+                            <archive> 
+                                <manifest> 
+                                    <mainClass>fully.qualified.MainClass</mainClass> 
+                                </manifest> 
+                            </archive> 
+                            <descriptorRefs> 
+                                <descriptorRef>jar-with-dependencies</descriptorRef> 
+                            </descriptorRefs> 
+                        </configuration> 
                     </plugin>
                 </plugins>
             </build>

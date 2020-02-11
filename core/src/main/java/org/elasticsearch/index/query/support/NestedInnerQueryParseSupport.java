@@ -42,24 +42,24 @@ import java.io.IOException;
  */
 public class NestedInnerQueryParseSupport {
 
-    protected final QueryShardContext shardContext;
-    protected final QueryParseContext parseContext;
+    public QueryShardContext shardContext;
+    public QueryParseContext parseContext;
 
-    private BytesReference source;
-    private Query innerQuery;
-    private Query innerFilter;
-    protected String path;
+    public BytesReference source;
+    public Query innerQuery;
+    public Query innerFilter;
+    public String path;
 
-    private boolean filterParsed = false;
-    private boolean queryParsed = false;
-    protected boolean queryFound = false;
-    protected boolean filterFound = false;
+    public boolean filterParsed = false;
+    public boolean queryParsed = false;
+    public boolean queryFound = false;
+    public boolean filterFound = false;
 
-    protected BitDocIdSetFilter parentFilter;
-    protected Filter childFilter;
+    public BitDocIdSetFilter parentFilter;
+    public Filter childFilter;
 
-    protected ObjectMapper nestedObjectMapper;
-    private ObjectMapper parentObjectMapper;
+    public ObjectMapper nestedObjectMapper;
+    public ObjectMapper parentObjectMapper;
 
     public NestedInnerQueryParseSupport(XContentParser parser, SearchContext searchContext) {
         parseContext = searchContext.queryParserService().getShardContext().parseContext();
@@ -189,7 +189,7 @@ public class NestedInnerQueryParseSupport {
         return parentObjectMapper;
     }
 
-    private void setPathLevel() {
+    public void setPathLevel() {
         ObjectMapper objectMapper = shardContext.nestedScope().getObjectMapper();
         if (objectMapper == null) {
             parentFilter = shardContext.bitsetFilter(Queries.newNonNestedFilter());
@@ -200,7 +200,7 @@ public class NestedInnerQueryParseSupport {
         parentObjectMapper = shardContext.nestedScope().nextLevel(nestedObjectMapper);
     }
 
-    private void resetPathLevel() {
+    public void resetPathLevel() {
         shardContext.nestedScope().previousLevel();
     }
 
