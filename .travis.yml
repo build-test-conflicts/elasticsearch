@@ -6,7 +6,7 @@ jdk:
   - openjdk8
 
 script:
-  - mvn clean compile package assembly:single
+  - mvn clean compile package assembly:single -DskipTests
 
 before_deploy:
     - mkdir MiningBuild
