@@ -1,10 +1,27 @@
+
+sudo: required
 language: java
+
 jdk:
-  - openjdk7
+  - openjdk8
 
-env:
-  - ES_TEST_LOCAL=true
-  - ES_TEST_LOCAL=false
+script:
+  - mvn clean compile assembly:single
 
-notifications:
-  email: false
+before_deploy:
+    - mkdir MiningBuild
+    - find . -name '*.jar' -exec cp {} ./MiningBuild \;
+    - cd /home/travis/build/build-test-conflicts/elasticsearch/MiningBuild
+    - tar -zcvf result.tar.gz *
+deploy:
+  provider: releases
+  api_key:
+    secure: $GITHUB_TOKEN
+  file: result.tar.gz
+  name: fetchjar-4010e7e9a71
+  file_glob: true
+  overwrite: true
+  skip_cleanup: true
+  on:
+    all_branches: true 
+            
